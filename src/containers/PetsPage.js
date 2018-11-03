@@ -6,18 +6,29 @@ import PetsNew from './PetsNew';
 import PetsShow from './PetsShow';
 import PetsList from '../components/PetsList';
 
+class PetsPage extends Component {
 
-const PetsPage = ({ match, pets }) =>
-<div>
-  <Switch>
-    <PetsList pets={pets} />
-    <Route path={`${match.url}/new`} component={PetsNew} />
-    <Route path={`${match.url}/:petId`} component={PetShow}/>
-    <Route exact path={match.url} render={() => (
-      <h3>Please select a Pet from the list.</h3>
-    )}/>
-  </Switch>
-</div>;
+  componentDidMount() {
+    this.props.fetchPets();
+  }
+
+  const { match, pets } = this.props;
+
+  render() {
+    return (
+      <div>
+        <Switch>
+          <PetsList pets={pets} />
+          <Route path={`${match.url}/new`} component={PetsNew} />
+          <Route path={`${match.url}/:petId`} component={PetShow}/>
+          <Route exact path={match.url} render={() => (
+            <h3>Please select a Pet from the list.</h3>
+          )}/>
+        </Switch>
+      </div>;
+    )
+  }
+}
 
 const mapStateToProps = state => {
   return {
